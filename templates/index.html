@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Multi-Feature Web App{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-5" data-aos="fade-down">
+        <h1 class="display-4 fw-bold mb-3">Welcome to <span style="color: var(--primary-color);">Multi-Feature</span> App</h1>
+        <p class="lead">Explore our powerful tools designed to make your tasks easier</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="card h-100">
+            <div class="card-body text-center p-4">
+                <div class="icon-circle mb-4">
+                    <i class="fas fa-language fa-3x" style="color: var(--primary-color);"></i>
+                </div>
+                <h5 class="card-title">Language Translator</h5>
+                <p class="card-text">Translate text between multiple languages with ease. Support for over 100 languages.</p>
+                <a href="/translator" class="btn btn-primary mt-3">
+                    <i class="fas fa-arrow-right me-1"></i> Try Translator
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="card h-100">
+            <div class="card-body text-center p-4">
+                <div class="icon-circle mb-4">
+                    <i class="fas fa-calculator fa-3x" style="color: var(--primary-color);"></i>
+                </div>
+                <h5 class="card-title">Smart Calculator</h5>
+                <p class="card-text">Kid-friendly calculator with a beautiful interface. Perfect for learning and everyday use.</p>
+                <a href="/calculator" class="btn btn-primary mt-3">
+                    <i class="fas fa-arrow-right me-1"></i> Try Calculator
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100">
+            <div class="card-body text-center p-4">
+                <div class="icon-circle mb-4">
+                    <i class="fas fa-robot fa-3x" style="color: var(--primary-color);"></i>
+                </div>
+                <h5 class="card-title">AI Chat Assistant</h5>
+                <p class="card-text">Get help with any questions using our advanced AI assistant available on all pages.</p>
+                <button class="btn btn-primary mt-3" onclick="toggleChat()">
+                    <i class="fas fa-comments me-1"></i> Open Chat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background-color: rgba(108, 92, 231, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover .icon-circle {
+        transform: scale(1.1);
+    }
+</style>
+{% endblock %} 

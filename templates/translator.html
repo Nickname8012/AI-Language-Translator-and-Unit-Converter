@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+
+{% block title %}Language Translator & Grammar Checker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-5" data-aos="fade-down">
+        <h1 class="fw-bold" style="color: var(--primary-color);">Language Translator & Grammar Checker</h1>
+        <p class="lead">Translate text and check grammar in multiple languages</p>
+    </div>
+</div>
+
+<div class="row g-4" data-aos="fade-up">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-pen-fancy me-2" style="color: var(--primary-color);"></i>
+                    <label for="sourceText" class="form-label mb-0 fw-bold">Enter Text:</label>
+                </div>
+                <textarea class="form-control custom-textarea" id="sourceText" rows="6" placeholder="Enter text to translate or check grammar"></textarea>
+                
+                <div class="mt-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-globe me-2" style="color: var(--primary-color);"></i>
+                        <label for="sourceLang" class="form-label mb-0 fw-bold">From Language:</label>
+                    </div>
+                    <select class="form-select" id="sourceLang">
+                        <option value="auto">Auto Detect</option>
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ru">Russian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ar">Arabic</option>
+                        <option value="hi">Hindi</option>
+                        <option value="bn">Bengali</option>
+                        <option value="tr">Turkish</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-language me-2" style="color: var(--primary-color);"></i>
+                    <label for="targetText" class="form-label mb-0 fw-bold">Translation:</label>
+                </div>
+                <textarea class="form-control custom-textarea" id="targetText" rows="6" readonly></textarea>
+                
+                <div class="mt-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-globe me-2" style="color: var(--primary-color);"></i>
+                        <label for="targetLang" class="form-label mb-0 fw-bold">To Language:</label>
+                    </div>
+                    <select class="form-select" id="targetLang">
+                        <option value="en">English</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ru">Russian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ar">Arabic</option>
+                        <option value="hi">Hindi</option>
+                        <option value="bn">Bengali</option>
+                        <option value="tr">Turkish</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12 text-center" data-aos="zoom-in" data-aos-delay="100">
+        <button class="btn btn-lg btn-primary px-5 translate-btn" onclick="translateText()" style="font-size: 1.2rem; padding: 15px 40px; margin: 10px;">
+            <i class="fas fa-exchange-alt me-2"></i> Translate
+        </button>
+        <button class="btn btn-lg btn-success px-5 grammar-btn" onclick="checkGrammar()" style="font-size: 1.2rem; padding: 15px 40px; margin: 10px;">
+            <i class="fas fa-spell-check me-2"></i> Check Grammar
+        </button>
+        <button class="btn btn-lg btn-outline-secondary ms-3 px-4" onclick="swapLanguages()" style="font-size: 1.2rem; padding: 15px 30px; margin: 10px;">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="alert alert-info" id="grammarResult" style="display: none;"></div>
+    </div>
+</div>
+
+<style>
+    .custom-textarea {
+        border-radius: 15px;
+        padding: 15px;
+        font-size: 1.1rem;
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        resize: none;
+    }
+    
+    .custom-textarea:focus {
+        box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.25);
+    }
+    
+    .form-select {
+        border-radius: 10px;
+        padding: 10px 15px;
+        border: 1px solid #e2e8f0;
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+    
+    .translate-btn, .grammar-btn {
+        transition: all 0.3s ease;
+        border-radius: 50px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .translate-btn:hover, .grammar-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .translate-btn {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .grammar-btn {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    
+    /* Button animation */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .pulse {
+        animation: pulse 0.5s ease;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Flag icons for languages
+const languageFlags = {
+    'auto': '🌐',
+    'en': '🇺🇸',
+    'es': '🇪🇸',
+    'fr': '🇫🇷',
+    'de': '🇩🇪',
+    'it': '🇮🇹',
+    'pt': '🇵🇹',
+    'ru': '🇷🇺',
+    'ja': '🇯🇵',
+    'ko': '🇰🇷',
+    'zh': '🇨🇳',
+    'ar': '🇸🇦',
+    'hi': '🇮🇳',
+    'bn': '🇧🇩',
+    'tr': '🇹🇷'
+};
+
+// Add flags to select options
+function addFlagsToOptions() {
+    const sourceSelect = document.getElementById('sourceLang');
+    const targetSelect = document.getElementById('targetLang');
+    
+    for (let select of [sourceSelect, targetSelect]) {
+        for (let option of select.options) {
+            const langCode = option.value;
+            if (languageFlags[langCode]) {
+                option.text = `${languageFlags[langCode]} ${option.text}`;
+            }
+        }
+    }
+}
+
+// Add flags when the page loads
+document.addEventListener('DOMContentLoaded', addFlagsToOptions);
+
+function translateText() {
+    const sourceText = document.getElementById('sourceText').value;
+    const sourceLang = document.getElementById('sourceLang').value;
+    const targetLang = document.getElementById('targetLang').value;
+    
+    // Add animation to the button
+    const button = document.querySelector('.translate-btn');
+    button.classList.add('pulse');
+    setTimeout(() => {
+        button.classList.remove('pulse');
+    }, 500);
+    
+    if (!sourceText) {
+        showToast('Please enter text to translate');
+        return;
+    }
+    
+    // Set loading state
+    document.getElementById('targetText').value = 'Translating...';
+    
+    fetch('/translate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            text: sourceText,
+            source_lang: sourceLang,
+            target_lang: targetLang
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('targetText').value = data.translated_text;
+        } else {
+            showToast('Translation failed: ' + data.error);
+        }
+    })
+    .catch(error => {
+        showToast('Translation failed: ' + error);
+    });
+}
+
+function checkGrammar() {
+    const text = document.getElementById('sourceText').value;
+    const sourceLang = document.getElementById('sourceLang').value;
+    if (!text) {
+        showToast('Please enter text to check grammar');
+        return;
+    }
+    const button = document.querySelector('.grammar-btn');
+    button.classList.add('pulse');
+    setTimeout(() => { button.classList.remove('pulse'); }, 500);
+    document.getElementById('grammarResult').style.display = 'block';
+    document.getElementById('grammarResult').innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Checking grammar...';
+    fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify({ message: `Please check and correct the grammar of this text: "${text}"` })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Store the corrected text for later use
+            const correctedText = data.response;
+            // Use a data attribute to store the text safely
+            document.getElementById('grammarResult').innerHTML = `
+                <h5><i class="fas fa-check-circle text-success me-2"></i>Grammar Check Results:</h5>
+                <p id='correctedTextPara'></p>
+                <button class="btn btn-primary mt-3" onclick="applyCorrectedText()">
+                    <i class="fas fa-check me-2"></i> Apply Correction
+                </button>
+            `;
+            // Set the text content safely (handles HTML and quotes)
+            document.getElementById('correctedTextPara').textContent = correctedText;
+            document.getElementById('grammarResult').setAttribute('data-corrected', correctedText);
+        } else {
+            document.getElementById('grammarResult').innerHTML = `
+                <h5><i class="fas fa-exclamation-circle text-danger me-2"></i>Error:</h5>
+                <p>${data.error}</p>
+            `;
+        }
+    })
+    .catch(error => {
+        document.getElementById('grammarResult').innerHTML = `
+            <h5><i class="fas fa-exclamation-circle text-danger me-2"></i>Error:</h5>
+            <p>${error}</p>
+        `;
+    });
+}
+
+function applyCorrectedText() {
+    // Get the corrected text from the data attribute
+    const correctedText = document.getElementById('grammarResult').getAttribute('data-corrected');
+    document.getElementById('sourceText').value = correctedText;
+    showToast('Corrected text applied successfully!');
+    setTimeout(() => {
+        document.getElementById('grammarResult').style.display = 'none';
+    }, 2000);
+}
+
+function swapLanguages() {
+    const sourceSelect = document.getElementById('sourceLang');
+    const targetSelect = document.getElementById('targetLang');
+    
+    // Don't swap if source is auto-detect
+    if (sourceSelect.value === 'auto') {
+        showToast('Cannot swap when source is set to Auto Detect');
+        return;
+    }
+    
+    // Get current values
+    const sourceText = document.getElementById('sourceText').value;
+    const targetText = document.getElementById('targetText').value;
+    const sourceLang = sourceSelect.value;
+    const targetLang = targetSelect.value;
+    
+    // Swap languages
+    sourceSelect.value = targetLang;
+    targetSelect.value = sourceLang;
+    
+    // Swap text if there's translated content
+    if (targetText) {
+        document.getElementById('sourceText').value = targetText;
+        document.getElementById('targetText').value = '';
+    }
+}
+
+function showToast(message) {
+    // You can implement a toast notification here
+    alert(message);
+}
+</script>
+{% endblock %} 
