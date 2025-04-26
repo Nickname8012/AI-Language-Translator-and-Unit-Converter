@@ -69,4 +69,8 @@ def chat():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # <- dynamic port for deployment
+<<<<<<< HEAD
     app.run(host='0.0.0.0', port=port, debug=True)  # <- 0.0.0.0 binding
+=======
+    app.run(host='0.0.0.0', port=port, debug=True)  # <- 0.0.0.0 binding
+>>>>>>> 2376f11f3328da974ec07f84e15ed27014991a95
